@@ -28,8 +28,9 @@
         "react/jsx-props-no-spreading":["error",{
           "html":"ignore",
           "custom":"ignore",
-          "exceptions":[""]
-        }]
+          "exceptions":[""],
+        }],
+        "react/react-in-jsx-scope":"off",
 
     }
 }
