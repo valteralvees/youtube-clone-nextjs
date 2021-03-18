@@ -1,6 +1,6 @@
 import {Box, Typography, Avatar, makeStyles} from '@material-ui/core';
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeItem'
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(relativeTime);
 
