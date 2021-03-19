@@ -1,14 +1,21 @@
 import nc from 'next-connect';
 import connectToDatabase from 'src/utils/mongodb';
 import upload from 'src/utils/upload';
-import {ObjectId} from 'mongodb';,
+import {ObjectId} from 'mongodb';
+import jwt from 'next-auth/jwt'
+
+const secret = process.env.JWT_SECRET;
 
 const handler = nc()
   .use(upload.single('file'))
   .post(async (req,res)=>{
     
-    const { title, authorId, authorName, authorAvatar, videoUrl}
-    const { db } = await connectToDatabase();
+    const { title, authorId, authorName, authorAvatar, videoUrl} = req.body;
+
+    const token = await jwt.getToken({req, secret});
+
+    if (token) {
+      const { db } = await connectToDatabase();
     const collection = db.collection('videos');
 
     await collection.insertOne({
@@ -22,6 +29,10 @@ const handler = nc()
       updatedAt: new Date(),
     });
     res.json({ ok: 'true'});
+    }
+
+    return res.statusCode(401).end();
+    
   })
   .patch(async(req, res) =>{
     throw new Error('Throws me around! Error can be caught and handled.')
